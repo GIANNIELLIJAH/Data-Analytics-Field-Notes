@@ -49,7 +49,9 @@ this repo up (see `README.md`) — `git init`/clone, creating your
 reconstruct it from memory at the end.
 
 ```bash
-# TODO: the commands you actually ran to set up this repo
+mkdir DA-Analytics-Field-Notes
+cd DA-Analytics-Field-Notes
+git clone <https://github.com/GIANNIELLIJAH/Data-Analytics-Field-Notes.git>
 ```
 
 ## 1. First look at the raw file
@@ -59,13 +61,16 @@ safe peek at it — not the whole 254-row file, just the **first 5 lines**,
 enough to see the shape of it without scrolling past everything.
 
 ```bash
-# TODO: a command that prints just the first 5 lines of the raw file
- 
+head -n 5 co2_emissions
+```
 
 **Output:**
-_TODO: paste what you actually got_
+Afghanistan,AFG,2022,40578847,53303471617,10.170
+Africa,,2022,1445862695,,1459.114
+Africa (GCP),,2022,,,1459.103
+Albania,ALB,2022,2827614,36171005594,4.498
 
-**What I notice:** _TODO — your raw observations, in your own words_
+**What I notice: What I notice is that the population column from Africa is missing in the fourth row.
 
 ## 2. Column names
 
@@ -73,12 +78,11 @@ Next you want to see just the column names by themselves — one per line is
 a lot easier to scan than one long comma-separated row.
 
 ```bash
-# TODO: a command (or combination of commands) that prints just the header
-# row, one column name per line
+head -n 1 co2_emissions
 ```
 
 **Output:**
-_TODO_
+country,iso_code,year,population,gdp,co2
 
 ## 3. Column-by-column data type table
 
@@ -88,8 +92,7 @@ row. Column numbers for reference: `country`=1, `iso_code`=2, `year`=3,
 `population`=4, `gdp`=5, `co2`=6.
 
 ```bash
-# TODO: a command that prints the first 6 values from a single column
-# (repeat this for at least 5 of the 6 columns, swapping in each column's number)
+
 ```
 
 Fill in the table from what you actually saw — not a guess from the column
@@ -97,24 +100,24 @@ name alone:
 
 | Column | Inferred type | How I can tell |
 |---|---|---|
-| _TODO_ | _TODO_ | _TODO_ |
-| _TODO_ | _TODO_ | _TODO_ |
-| _TODO_ | _TODO_ | _TODO_ |
-| _TODO_ | _TODO_ | _TODO_ |
-| _TODO_ | _TODO_ | _TODO_ |
+| Afghanistan| AFG, 2022, 40578847, 53303471617 | I can tell because in my code I put the terminal in the order of the table. |
+| Africa |  | 2022, 1445862695|
+| Africa|  | 2022 | With this one there wasnt any values that correlate in the population or the gdp.
+| Albania | ALB, 2827614, 36171005594, | Albania, had all the variables that I was looking for compared to the table. |
+| Algeria | DZA, 45477391, 595820067103 | Algeria had the highest population compared to the other countries; since i coded the command: f1, f2 it made sure to list them in orderly manner.  |
 
 **In your own words:** what's the actual difference between a list/array
 and a table? (Not a definition you looked up — explain it the way you'd
 explain it to a friend who's never coded. No command needed for this one,
 just think about the table you just filled in above.)
 
-_TODO_
+A difference I noticed between list and columns was that without adding a variable, it doesnt necessarily have a title, so without the commands being labeled by numbers according to the column I wouldnt know what the numbers correlated in comparison to the chart.
 
 ## 4. Structured or unstructured?
 
 State whether this dataset is structured or unstructured, and why.
 
-_TODO_
+Structured due to the columns and rows having the same variables.
 
 ## 5. Before you trust this data
 
@@ -126,27 +129,26 @@ You may need more than one command for this — piping (`|`) feeds one
 command's output into the next as input.
 
 ```bash
-# TODO: a command (or combination) that counts how many rows have a
-# BLANK iso_code
+awk -f',' '$2 == "" {print}' co2_emissions_2022.csv | wc -l
 ```
 
 **Output:**
-_TODO_
+36
 
-```bash
-# TODO: the same idea, but for the gdp column
+```bash 
+awk -f',' '$4 == "" {print}' co2_emissions-2022.csv | grep '^$' | wc -l
 ```
 
 **Output:**
-_TODO_
+89
 
 List **at least 2** specific things you'd want to know about how this
 dataset was collected, before trusting any conclusion drawn from it — ground
 at least one in the counts you just found.
 
 **My 2 concerns:**
-1. _TODO_
-2. _TODO_
+1. One specific thing I want to know how this data set was collected was contempalting it if it was surveyed and or if it was sattelite; Did anything change in the process?
+2. Were there any changes made to this data set after given the results? If so what was the change?
 
 ## 6. Data-quality question for the source
 
@@ -155,7 +157,7 @@ phrase it as a real question you'd send to the data's source/maintainer. A
 good test: could they actually answer it with a concrete yes/no or fact —
 not "is this data good?"
 
-_TODO_
+How was this Data surveyed? Is this data surely across the entirety of 2022?
 
 ## 7. Something you're actually curious about
 
@@ -165,14 +167,13 @@ curious to explore using this data? Pick two specific countries you're
 curious to compare, and look up their full rows.
 
 ```bash
-# TODO: a command that finds a specific country's row by name (repeat for
-# a second country of your choice)
+grep -n "$1" co2_comissions.csv
 ```
 
 **Output:**
-_TODO_
+The 
 
-**My question:** _TODO_
+**My question:** What is the difference in Afghanistan and Algeria in gdp? Did the following years affect the data?
 
 ## 8. AI-literacy reflection
 
@@ -183,10 +184,10 @@ fact before relying on it professionally — specific enough that you could
 actually follow it, not "I'll be careful."
 
 **Risks:**
-1. _TODO_
-2. _TODO_
+1. Risk one would be mainly about code error, this can happen if the ai isn't viable to the entire line of command in the terminal.
+2. Another risk, is us as well when inputting a question into AI this can leave room for human error as well.
 
-**My rule:** _TODO_
+**My rule:** My rule is to always ask the AI how did they get this answer if there is flaw then I know that there is error.
 
 ## 9. Something that went wrong (and how you figured it out)
 
@@ -197,10 +198,12 @@ this at least once. Paste the actual command and what actually happened
 fix — not "I googled it and it worked."
 
 ```bash
-# TODO: a command that errored, or gave you unexpected results
+git status 
+ls -a 
+ls -l 
 ```
 
 **What happened:**
-_TODO: the actual error message, or the unexpected output you got_
+_TODO:  When I was trying to put in the awk command it was shown as an error, this is due to the precise spacing of code. 
 
-**What it told me and how I fixed it:** _TODO_
+**What it told me and how I fixed it:** I actually troubleshooted with AI, and asked it how it got the answer.
