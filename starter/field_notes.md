@@ -60,7 +60,7 @@ enough to see the shape of it without scrolling past everything.
 
 ```bash
 # TODO: a command that prints just the first 5 lines of the raw file
-```
+ 
 
 **Output:**
 _TODO: paste what you actually got_
